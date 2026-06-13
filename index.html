@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Palakuru Sai — Python Developer</title>
+<style>
+  :root{
+    --bg:#0d1117;
+    --panel:#161b22;
+    --line:#262d38;
+    --text:#e6edf3;
+    --muted:#8b96a5;
+    --accent:#7ee787;
+    --accent2:#79c0ff;
+    --mono: 'JetBrains Mono', 'Fira Code', Consolas, monospace;
+    --sans: 'Inter', -apple-system, sans-serif;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:var(--sans);
+    line-height:1.6;
+  }
+  a{color:var(--accent2);text-decoration:none;}
+  a:hover{text-decoration:underline;}
+
+  /* NAV */
+  nav{
+    position:sticky;top:0;z-index:100;
+    background:rgba(13,17,23,0.85);
+    backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--line);
+    display:flex;justify-content:space-between;align-items:center;
+    padding:16px 6%;
+  }
+  .logo{font-family:var(--mono);font-weight:700;color:var(--accent);font-size:1.1rem;}
+  .logo span{color:var(--muted);}
+  nav ul{display:flex;gap:28px;list-style:none;}
+  nav ul a{color:var(--text);font-size:0.95rem;font-family:var(--mono);}
+  nav ul a:hover{color:var(--accent);text-decoration:none;}
+
+  /* HERO */
+  header.hero{
+    padding:90px 6% 60px;
+    max-width:1100px;margin:0 auto;
+  }
+  .eyebrow{
+    font-family:var(--mono);color:var(--accent);
+    font-size:0.9rem;letter-spacing:2px;text-transform:uppercase;
+    margin-bottom:16px;
+  }
+  .eyebrow::before{content:"$ ";color:var(--muted);}
+  h1{
+    font-size:clamp(2.4rem,6vw,4rem);
+    font-weight:800;
+    line-height:1.1;
+    margin-bottom:18px;
+    letter-spacing:-1px;
+  }
+  h1 .highlight{color:var(--accent);}
+  .tagline{
+    font-size:1.15rem;color:var(--muted);max-width:640px;margin-bottom:30px;
+  }
+  .contact-row{
+    display:flex;flex-wrap:wrap;gap:18px;font-family:var(--mono);font-size:0.9rem;
+    color:var(--muted);margin-bottom:30px;
+  }
+  .contact-row a{color:var(--text);}
+  .btn-row{display:flex;gap:14px;flex-wrap:wrap;}
+  .btn{
+    font-family:var(--mono);font-size:0.9rem;font-weight:600;
+    padding:12px 22px;border-radius:6px;border:1px solid var(--accent);
+    color:var(--accent);transition:all .2s;
+  }
+  .btn:hover{background:var(--accent);color:var(--bg);text-decoration:none;}
+  .btn.alt{border-color:var(--line);color:var(--text);}
+  .btn.alt:hover{border-color:var(--accent2);color:var(--accent2);background:transparent;}
+
+  /* HERO LAYOUT WITH PROFILE IMAGE */
+  .hero-flex{
+    display:flex;align-items:center;gap:48px;flex-wrap:wrap;
+  }
+  .hero-text{flex:1;min-width:280px;}
+  .profile-img{
+    width:200px;height:200px;border-radius:50%;
+    object-fit:cover;border:2px solid var(--accent);
+    flex-shrink:0;
+  }
+  .profile-placeholder{
+    width:200px;height:200px;border-radius:50%;
+    border:2px dashed var(--line);
+    display:flex;align-items:center;justify-content:center;
+    font-family:var(--mono);color:var(--muted);font-size:0.8rem;
+    text-align:center;flex-shrink:0;
+  }
+  @media(max-width:700px){
+    .hero-flex{flex-direction:column-reverse;text-align:center;}
+    .contact-row,.btn-row{justify-content:center;}
+  }
+
+ 
+  .edu-logo{
+    width:60px;height:60px;object-fit:contain;
+  border-radius:6px;margin-top:10px;
+  background:#fff;padding:6px;
+  }
+  .edu-logo-placeholder{
+    width:60px;height:60px;border:2px dashed var(--line);border-radius:6px;
+    display:flex;align-items:center;justify-content:center;
+    font-family:var(--mono);color:var(--muted);font-size:0.6rem;
+    margin-top:10px;text-align:center;padding:4px;
+  }
+
+  /* SECTIONS */
+  section{
+    padding:70px 6%;max-width:1100px;margin:0 auto;
+    border-top:1px solid var(--line);
+  }
+  .section-title{
+    font-family:var(--mono);font-size:0.85rem;letter-spacing:3px;
+    text-transform:uppercase;color:var(--muted);margin-bottom:8px;
+  }
+  .section-title::before{content:"// ";color:var(--accent);}
+  h2{font-size:1.9rem;margin-bottom:36px;font-weight:700;}
+
+  /* ABOUT */
+  .about-text{max-width:760px;color:var(--muted);font-size:1.02rem;}
+  .about-text strong{color:var(--text);}
+
+  /* SKILLS */
+  .skills-grid{
+    display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:18px;
+  }
+  .skill-card{
+    background:var(--panel);border:1px solid var(--line);
+    border-radius:8px;padding:20px;
+  }
+  .skill-card h3{
+    font-family:var(--mono);font-size:0.85rem;color:var(--accent2);
+    text-transform:uppercase;letter-spacing:1px;margin-bottom:10px;
+  }
+  .skill-card p{color:var(--text);font-size:0.95rem;}
+
+  /* PROJECTS */
+  .project-card{
+    background:var(--panel);border:1px solid var(--line);
+    border-radius:10px;padding:28px;margin-bottom:24px;
+    transition:border-color .2s;
+  }
+  .project-card:hover{border-color:var(--accent2);}
+  .project-head{
+    display:flex;justify-content:space-between;align-items:flex-start;
+    flex-wrap:wrap;gap:10px;margin-bottom:10px;
+  }
+  .project-head h3{font-size:1.3rem;}
+  .project-link{font-family:var(--mono);font-size:0.85rem;white-space:nowrap;}
+  .tech-tags{
+    display:flex;gap:8px;flex-wrap:wrap;margin:12px 0;
+  }
+  .tech-tags span{
+    font-family:var(--mono);font-size:0.78rem;color:var(--accent);
+    background:rgba(126,231,135,0.08);border:1px solid rgba(126,231,135,0.25);
+    padding:3px 10px;border-radius:20px;
+  }
+  .project-card ul{list-style:none;color:var(--muted);font-size:0.95rem;}
+  .project-card ul li{margin-bottom:6px;padding-left:18px;position:relative;}
+  .project-card ul li::before{
+    content:"→";position:absolute;left:0;color:var(--accent2);
+  }
+
+  /* EXPERIENCE / EDUCATION TIMELINE */
+  .timeline-item{
+    display:grid;grid-template-columns:140px 1fr;gap:24px;
+    padding-bottom:28px;margin-bottom:28px;border-bottom:1px solid var(--line);
+  }
+  .timeline-item:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0;}
+  .timeline-date{
+    font-family:var(--mono);color:var(--accent2);font-size:0.9rem;
+  }
+  .timeline-content h3{font-size:1.1rem;margin-bottom:4px;}
+  .timeline-content .org{color:var(--muted);font-size:0.92rem;margin-bottom:8px;}
+  .timeline-content ul{list-style:none;color:var(--muted);font-size:0.93rem;}
+  .timeline-content ul li{margin-bottom:5px;padding-left:18px;position:relative;}
+  .timeline-content ul li::before{content:"→";position:absolute;left:0;color:var(--accent2);}
+
+  @media(max-width:600px){
+    .timeline-item{grid-template-columns:1fr;gap:6px;}
+  }
+
+  /* CERTS */
+  .cert-list{display:grid;gap:12px;}
+  .cert-item{
+    display:flex;align-items:center;gap:14px;
+    background:var(--panel);border:1px solid var(--line);
+    border-radius:8px;padding:14px 18px;font-size:0.95rem;
+  }
+  .cert-item .dot{
+    width:8px;height:8px;border-radius:50%;background:var(--accent);
+    flex-shrink:0;
+  }
+
+  /* CONTACT / FOOTER */
+  footer{
+    padding:60px 6%;text-align:center;border-top:1px solid var(--line);
+  }
+  footer h2{margin-bottom:10px;}
+  footer p{color:var(--muted);margin-bottom:24px;}
+  .footer-links{display:flex;justify-content:center;gap:24px;flex-wrap:wrap;margin-bottom:30px;}
+  .footer-links a{font-family:var(--mono);}
+  .footer-note{font-family:var(--mono);color:var(--muted);font-size:0.8rem;}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo">sai<span>.dev</span></div>
+  <ul>
+    <li><a href="#about">About</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#education">Education</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<header class="hero">
+  <div class="hero-flex">
+    <div class="hero-text">
+      <div class="eyebrow">available for sde / python developer / data analyst roles</div>
+      <h1>Palakuru Sai —<br>building with <span class="highlight">Python</span>, data &amp; vision.</h1>
+      <p class="tagline">
+        ECE graduate who turns ideas into working software: detection systems, dashboards,
+        and data pipelines built with Python, SQL and a steady debugging habit.
+      </p>
+      <div class="contact-row">
+        <a href="mailto:saipalakuru02@gmail.com">saipalakuru02@gmail.com</a>|
+        <span><a href="tel:+917093914114">+91-7093914114</a></span>|
+        <span>Tirupati, AP, India</span>
+      </div>
+      <div class="btn-row">
+        <a class="btn" href="https://github.com/palakurusai" target="_blank">GitHub →</a>
+        <a class="btn alt" href="https://www.linkedin.com/in/contactpsai/" target="_blank">LinkedIn</a>
+        <a class="btn alt" href="#projects">View Projects</a>
+        <a class="btn alt" href="sai_R.pdf" target="_blank">Resume (PDF)</a>
+      </div>
+    </div>
+    <img class="profile-img" src="sai_pass_jpg.jpeg" alt="Palakuru Sai">
+  </div>
+</header>
+
+<section id="about">
+  <div class="section-title">about</div>
+  <h2>Profile</h2>
+  <p class="about-text">
+    I'm an <strong>Electronics &amp; Communication Engineering</strong> graduate (2022–2026) with
+    hands-on experience building <strong>Python tools, data pipelines, and computer vision systems</strong>.
+    My recent work includes a marine debris detection system using <strong>YOLOv8</strong> and a
+    full-stack <strong>Personal Finance Dashboard</strong>. I hold the <strong>PCEP-30-02</strong>
+    certification (Python Institute) and I'm currently looking for SDE, Python Developer, or
+    Data Analyst roles — full-time or internship, remote or on-site, anywhere in India.
+  </p>
+</section>
+
+<section id="skills">
+  <div class="section-title">technical skills</div>
+  <h2>Stack</h2>
+  <div class="skills-grid">
+    <div class="skill-card">
+      <h3>Languages</h3>
+      <p>Python, JavaScript, HTML5, CSS3, SQL</p>
+    </div>
+    <div class="skill-card">
+      <h3>Frameworks &amp; Libraries</h3>
+      <p>NumPy, Pandas, Matplotlib</p>
+    </div>
+    <div class="skill-card">
+      <h3>CS Fundamentals</h3>
+      <p>OOP, Data Structures &amp; Algorithms, Operating Systems, Computer Networks</p>
+    </div>
+    <div class="skill-card">
+      <h3>Tools &amp; Databases</h3>
+      <p>Git, GitHub, VS Code, Excel, MySQL</p>
+    </div>
+  </div>
+</section>
+
+<section id="projects">
+  <div class="section-title">selected work</div>
+  <h2>Projects</h2>
+
+  <div class="project-card">
+    <div class="project-head">
+      <h3>Marine Debris Detection Using Side Scan Sonar</h3>
+      <a class="project-link" href="https://github.com/palakurusai/marine-debris-detection" target="_blank">View on GitHub →</a>
+    </div>
+    <div class="tech-tags">
+      <span>Python</span><span>YOLOv8</span><span>OpenCV</span><span>Pandas</span><span>Matplotlib</span>
+    </div>
+    <ul>
+      <li>Built an object detection system to identify marine debris in side scan sonar images using YOLOv8.</li>
+      <li>Preprocessed sonar datasets with image enhancement techniques to reduce noise and improve visibility.</li>
+      <li>Trained and evaluated the model on domain-specific data, achieving measurable detection accuracy.</li>
+    </ul>
+  </div>
+
+  <div class="project-card">
+    <div class="project-head">
+      <h3>Personal Finance Dashboard</h3>
+      <a class="project-link" href="https://github.com/palakurusai/personal-finance-dashboard" target="_blank">View on GitHub →</a>
+    </div>
+    <div class="tech-tags">
+      <span>Python</span><span>HTML</span><span>CSS</span><span>JavaScript</span><span>Git</span>
+    </div>
+    <ul>
+      <li>Developed a full-stack web app to track income, expenses, savings, and financial trends.</li>
+      <li>Built interactive visualizations and data processing pipelines with a responsive UI.</li>
+    </ul>
+  </div>
+
+  <!-- ADD MORE PROJECT CARDS HERE -->
+
+</section>
+
+<section id="experience">
+  <div class="section-title">experience</div>
+  <h2>Internships &amp; Experience</h2>
+
+  <div class="timeline-item">
+    <div class="timeline-date">2024</div>
+    <div class="timeline-content">
+      <h3>Virtual Python Developer Intern</h3>
+      <div class="org">Prowork Foundation</div>
+      <ul>
+        <li>Built Python applications including a weather app, data analysis dashboard, and automation scripts.</li>
+        <li>Strengthened programming fundamentals and problem-solving in a professional virtual environment.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="timeline-item">
+    <div class="timeline-date">May – Jul 2025</div>
+    <div class="timeline-content">
+      <h3>Competitive Programming &amp; Advanced Algorithmic Techniques</h3>
+      <div class="org">Six Phrase</div>
+      <ul>
+        <li>Solved complex DSA problems under time constraints, improving logic and coding speed.</li>
+        <li>Strengthened understanding of data structures, algorithms, recursion, dynamic programming, and graph-based problem-solving techniques.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ADD MORE EXPERIENCE HERE -->
+
+</section>
+
+<section id="education">
+  <div class="section-title">education</div>
+  <h2>Academic Background</h2>
+
+  <div class="timeline-item">
+    <div class="timeline-date">
+      2022 – 2026
+      <img class="edu-logo" src="svce_logo.jpeg"  alt="SVCE logo">
+    </div>
+    <div class="timeline-content">
+      <h3>B.Tech — Electronics &amp; Communication Engineering</h3>
+      <div class="org">SVCE, Tirupati &nbsp;|&nbsp; CGPA: 7.79</div>
+    </div>
+  </div>
+
+  <div class="timeline-item">
+    <div class="timeline-date">
+      2020 – 2022
+      <img class="edu-logo" src="nr_jr.png" alt="Narayana Junior College logo">
+    </div>
+    <div class="timeline-content">
+      <h3>Intermediate (MPC)</h3>
+      <div class="org">Narayana Junior College &nbsp;|&nbsp; Score: 7.45</div>
+    </div>
+  </div>
+
+  <div class="timeline-item">
+    <div class="timeline-date">
+      2019 – 2020
+      <img class="edu-logo" src="nr_scl.jpeg" alt="Narayana EM School logo">
+    </div>
+    <div class="timeline-content">
+      <h3>SSC</h3>
+      <div class="org">Narayana EM School &nbsp;|&nbsp; Score: 10.0 / 10.0</div>
+    </div>
+  </div>
+
+</section>
+
+<section id="certifications">
+  <div class="section-title">certifications</div>
+  <h2>Certifications &amp; Courses</h2>
+  <div class="cert-list">
+    <div class="cert-item"><div class="dot"></div> PCEP-30-02 — Certified Entry-Level Python Programmer (Python Institute)</div>
+    <div class="cert-item"><div class="dot"></div> Python Essential Training — LinkedIn Learning</div>
+    <div class="cert-item"><div class="dot"></div> SQL (Intermediate) &amp; Python (Basic) — HackerRank</div>
+    <div class="cert-item"><div class="dot"></div> Competitive Programming &amp; Advanced Algorithmic Techniques — Six Phrase</div>
+    <!-- ADD MORE CERTIFICATIONS HERE -->
+  </div>
+</section>
+
+<footer id="contact">
+  <div class="section-title" style="text-align:center;">get in touch</div>
+  <h2>Let's work together</h2>
+  <p>Open to SDE, Python Developer, and Data Analyst roles — full-time or internship.</p>
+  <div class="footer-links">
+    <a href="mailto:saipalakuru02@gmail.com">Email</a>
+    <a href="https://www.linkedin.com/in/contactpsai/" target="_blank">LinkedIn</a>
+    <a href="https://github.com/palakurusai" target="_blank">GitHub</a>
+  </div>
+  <div class="footer-note">© 2026 Palakuru Sai — built with HTML &amp; CSS</div>
+</footer>
+
+</body>
+</html>
